@@ -6,18 +6,21 @@ import java.util.Map;
 public class User {
 
     private int userID;
-    private String userName;
+    private int userAge;
+    private String userZipCode;
+    private String userOccupation;
+    private char userGender;
     private HashMap<Integer, Rating> ratings;
 
     public User(){
         userID = 0;
-        userName = "";
+        userOccupation = "";
         ratings = new HashMap<Integer, Rating>();
     }
 
     public User(int id, String name){
         userID = 0;
-        userName = "";
+        userOccupation = "";
         ratings = new HashMap<Integer, Rating>();
     }
 
@@ -29,12 +32,36 @@ public class User {
         this.userID = userID;
     }
 
-    public String getUserName() {
-        return userName;
+    public int getUserAge() {
+        return userAge;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserAge(int userAge) {
+        this.userAge = userAge;
+    }
+
+    public String getUserZipCode() {
+        return userZipCode;
+    }
+
+    public void setUserZipCode(String userZipCode) {
+        this.userZipCode = userZipCode;
+    }
+
+    public String getUserOccupation() {
+        return userOccupation;
+    }
+
+    public void setUserOccupation(String userOccupation) {
+        this.userOccupation = userOccupation;
+    }
+
+    public char getUserGender() {
+        return userGender;
+    }
+
+    public void setUserGender(char userGender) {
+        this.userGender = userGender;
     }
 
     public boolean addToRatings(int keyid, Rating rating){

@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 
 public class BadFileException extends FileNotFoundException {
 	
-	public BadFileException(String input, FileNotFoundException err) {
-		super("Error Has happened :(. Error Message: " + err);
+	public BadFileException(String message, Throwable err){
+		System.out.println(message + " Error message: " + err);
 	}
 
 
