@@ -5,12 +5,13 @@ import NSD.Modules.*;
 import java.io.*;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class DataImport {
 
     File file = null;
     FileInputStream in = null;
-    BufferedInputStream bufIn = null;
+    Scanner scan = null;
 
     public void importAll(){
 
@@ -27,23 +28,7 @@ public class DataImport {
         User user;
 
         try{
-
-            setFileInput("users.dat");
-
-            String inputRaw = "";
-            for(int i : bufIn.readAllBytes()){
-
-                if(i == 10){
-                    i = 124;
-                }
-
-                if(i != 13) {
-                    inputRaw += ((char)i);
-                }
-
-            }
-
-            String[] inputStr = parseInput(inputRaw);
+            String[] inputStr = parseInput(setFileInput("users.dat"));
 
             for(String s : inputStr){
                 System.out.println("This a input clean :" + s);
@@ -93,26 +78,17 @@ public class DataImport {
         try{
 
             setFileInput("ratings.dat");
-
-            String inputRaw = "";
-            for(int i : bufIn.readAllBytes()){
-                    inputRaw += ((char)i);
-            }
-
-            String[] inputStr = parseInput(inputRaw);
+            String[] inputStr = scan.next().strip().split("\t");
 
             for(String s : inputStr){
                 System.out.println("This a input clean :" + s);
             }
 
             temp = new HashMap<Integer, Rating>();
-
+            temp.get(1).
             for(int x = 0; x < Arrays.stream(inputStr).count(); x++){
 
                 rating = new Rating();
-
-
-
                 temp.put(x,rating);
                 x += 4;
             }
@@ -128,21 +104,30 @@ public class DataImport {
         return temp;
     }
 
-    private string setFileInput(String filename) throws BadFileException {
+    private String setFileInput(String filename) throws BadFileException {
 
         try{
 
             file = null;
             in = null;
-            bufIn = null;
+            scan = null;
+
+            String result = "";
 
             file = new File(filename);
             in = new FileInputStream(file);
-            bufIn = new BufferedInputStream(in);
+            scan = new Scanner(in);
+
+            while(scan.hasNext()){
+                result += scan.nextLine();
+            }
+            return result;
+
         } catch (FileNotFoundException e) {
             throw new BadFileException( filename + " not Found", e);
         }catch (RuntimeException e){
             System.out.println("Sorry for the incontinence, however and Error has happened :(.");
+            return "";
         }
 
     }

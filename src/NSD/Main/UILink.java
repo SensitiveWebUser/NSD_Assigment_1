@@ -42,12 +42,9 @@ public class UILink {
 
     public void mainMenu() {
 
-        boolean success = false;
         int userOption;
 
-        while (!success) {
-
-            success = true;
+        while (true) {
 
             printOut("===Welcome to the main menu===");
             printOut(" 1) Load data");
@@ -62,7 +59,7 @@ public class UILink {
             switch(userOption) {
 
                 case 1:
-                        dataIn.importAll();
+                    dataIn.importAll();
                     break;
                 case 2:
 
@@ -83,12 +80,15 @@ public class UILink {
                     break;
 
                 default:
-                    success = false;
 
             }
 
         }
 
+    }
+
+    private String userReview(){
+        return null;
     }
 
 }

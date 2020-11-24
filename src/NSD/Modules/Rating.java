@@ -2,6 +2,9 @@ package NSD.Modules;
 
 public class Rating {
 
+    private int MovieId;
+    //private int
+
     private float rating;
 
     public float getRating() {
