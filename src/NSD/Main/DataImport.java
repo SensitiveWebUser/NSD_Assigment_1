@@ -3,6 +3,7 @@ package NSD.Main;
 import NSD.Modules.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -27,9 +28,7 @@ public class DataImport {
 
     private HashMap<Integer, User> importUsers(){
 
-        //TODO: Fix custom exception :)
         HashMap<Integer, User> temp = null;
-
         User user;
 
         try{
@@ -80,7 +79,9 @@ public class DataImport {
 
         try{
 
-            String[] inputStr  = setFileInput("ratings.dat");
+            String[] inputStr = parseInput().toArray(new String[0]);
+
+            setFileInput("ratings.dat").toArray(inputStr);
 
             for(int x = 0; x < Arrays.stream(inputStr).count(); x++){
 
@@ -98,7 +99,7 @@ public class DataImport {
 
     }
 
-    private String[] setFileInput(String filename) throws BadFileException {
+    private ArrayList<String> setFileInput(String filename) throws BadFileException {
 
         try{
 
@@ -123,7 +124,17 @@ public class DataImport {
 
     }
 
-    private String[] parseInput() {
-        return scan.nextLine().split("::|\t|\\|");
+    private ArrayList<String> parseInput() {
+
+        ArrayList<String> result = new ArrayList<String>();
+
+        while(scan.hasNext()){
+            String[] temp = scan.nextLine().split("::|\t|\\|");
+            for (String s: temp) {
+                result.add(s);
+            }
+        }
+
+        return result;
     }
 }
