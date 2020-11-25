@@ -76,20 +76,6 @@ public class User {
 
     }
 
-    public boolean addToRatings(Rating[] _ratings){
-
-        try{
-            for (Rating r: _ratings) {
-                ratings.put(1, r);
-            }
-        }catch (Exception e){
-            return false;
-        }
-
-        return true;
-
-    }
-
     public float getAvarageMovieReview(){
 
         float result = 0;

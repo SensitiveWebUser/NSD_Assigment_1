@@ -13,14 +13,19 @@ public class DataImport {
     FileInputStream in = null;
     Scanner scan = null;
 
+    private HashMap<Integer, Movie> movies = new HashMap<Integer, Movie>();
+    private HashMap<Integer, User> users = new HashMap<Integer, User>();
+
+
     public void importAll(){
 
-        HashMap<Integer, Rating> ratings = importRatings();
-        importUsers(ratings);
+        importMovie();
+        users = importUsers();
+        importRatings();
 
     }
 
-    private HashMap<Integer, User> importUsers(HashMap<Integer, Rating> ratings){
+    private HashMap<Integer, User> importUsers(){
 
         //TODO: Fix custom exception :)
         HashMap<Integer, User> temp = null;
@@ -28,7 +33,7 @@ public class DataImport {
         User user;
 
         try{
-            String[] inputStr = parseInput(setFileInput("users.dat"));
+            String[] inputStr = setFileInput("users.dat");
 
             for(String s : inputStr){
                 System.out.println("This a input clean :" + s);
@@ -69,42 +74,31 @@ public class DataImport {
         return null;
     }
 
-    private HashMap<Integer, Rating> importRatings(){
-
-        HashMap<Integer, Rating> temp = null;
+    private void importRatings(){
 
         Rating rating;
 
         try{
 
-            setFileInput("ratings.dat");
-            String[] inputStr = scan.next().strip().split("\t");
+            String[] inputStr  = setFileInput("ratings.dat");
 
-            for(String s : inputStr){
-                System.out.println("This a input clean :" + s);
-            }
-
-            temp = new HashMap<Integer, Rating>();
-            temp.get(1).
             for(int x = 0; x < Arrays.stream(inputStr).count(); x++){
 
                 rating = new Rating();
-                temp.put(x,rating);
-                x += 4;
+                rating.setMovieId(Integer.parseInt(inputStr[x + 1]));
+                rating.setRating(Integer.parseInt(inputStr[x + 2]));
+                rating.setTime(Integer.parseInt(inputStr[x + 3]));
+                users.get(Integer.parseInt(inputStr[x])).addToRatings(rating.getMovieId(), rating);
+
+                x += 3;
             }
 
-            temp.forEach((key, value) -> {
-                //System.out.println("ID: " + value.getUserID() + " Age: " + value.getUserAge() + " Gen: " + value.getUserGender() + " Oc: "+ value.getUserOccupation() + " Zip: "+ value.getUserZipCode());
-            });
-
         } catch (Exception e){
-            return null;
         }
 
-        return temp;
     }
 
-    private String setFileInput(String filename) throws BadFileException {
+    private String[] setFileInput(String filename) throws BadFileException {
 
         try{
 
@@ -118,21 +112,18 @@ public class DataImport {
             in = new FileInputStream(file);
             scan = new Scanner(in);
 
-            while(scan.hasNext()){
-                result += scan.nextLine();
-            }
-            return result;
+            return parseInput();
 
         } catch (FileNotFoundException e) {
             throw new BadFileException( filename + " not Found", e);
         }catch (RuntimeException e){
             System.out.println("Sorry for the incontinence, however and Error has happened :(.");
-            return "";
+            return null;
         }
 
     }
 
-    private String[] parseInput(String input) {
-        return input.split("::|\t|\\|");
+    private String[] parseInput() {
+        return scan.nextLine().split("::|\t|\\|");
     }
 }
