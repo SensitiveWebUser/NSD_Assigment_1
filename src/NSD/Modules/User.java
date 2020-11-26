@@ -1,5 +1,6 @@
 package NSD.Modules;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,15 +11,15 @@ public class User {
     private String userZipCode;
     private String userOccupation;
     private char userGender;
-    private HashMap<Integer, Rating> ratings;
+    private final HashMap<Integer, Rating> ratings;
 
-    public User(){
+    public User() {
         userID = 0;
         userOccupation = "";
         ratings = new HashMap<Integer, Rating>();
     }
 
-    public User(int id, String name){
+    public User(int id, String name) {
         userID = 0;
         userOccupation = "";
         ratings = new HashMap<Integer, Rating>();
@@ -64,11 +65,11 @@ public class User {
         this.userGender = userGender;
     }
 
-    public boolean addToRatings(int keyid, Rating rating){
+    public boolean addToRatings(int keyid, Rating rating) {
 
-        try{
+        try {
             ratings.put(keyid, rating);
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
 
@@ -76,10 +77,10 @@ public class User {
 
     }
 
-    public float getAvarageMovieReview(){
+    public double getAvarageMovieReview() {
 
-        float result = 0;
-        try{
+        double result = 0;
+        try {
 
             for (Map.Entry<Integer, Rating> entry : ratings.entrySet()) {
                 Rating rating = entry.getValue();
@@ -88,9 +89,30 @@ public class User {
 
             result = result / ratings.size();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return -1;
         }
+
+        return result;
+    }
+
+    public int getMovieReview(int movieID) {
+        if (ratings.get(movieID) != null) {
+            int result = ratings.get(movieID).getRating();
+            return result;
+        }
+        return -1;
+    }
+
+    public ArrayList<Integer> getAllReviewMovies() {
+
+        ArrayList<Integer> result = new ArrayList<>();
+
+        for (Map.Entry<Integer, Rating> entry : ratings.entrySet()) {
+            result.add(entry.getKey());
+        }
+
+        result = result;
 
         return result;
     }

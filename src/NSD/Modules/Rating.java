@@ -6,7 +6,7 @@ public class Rating {
     private int rating;
     private int time;
 
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 

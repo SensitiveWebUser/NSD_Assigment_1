@@ -6,25 +6,22 @@ public class Movie {
 
     private int movieID;
     private String movieName;
-    private HashMap<Integer, Rating> ratings;
 
-    public Movie(){
+    public Movie() {
 
         movieID = 0;
         movieName = "";
-        ratings = new HashMap<Integer, Rating>();
 
     }
 
-    public Movie(int id, String name, HashMap<Integer, Rating> ratings){
+    public Movie(int id, String name, HashMap<Integer, Rating> ratings) {
 
         movieID = id;
         movieName = name;
-        this.ratings = ratings;
 
     }
 
-    public int getMovieID(){
+    public int getMovieID() {
         return movieID;
     }
 
@@ -32,22 +29,11 @@ public class Movie {
         return movieName;
     }
 
-    public void setRatings(HashMap<Integer, Rating> newRatings){
-        ratings = newRatings;
+    public void setMovieID(int movieID) {
+        this.movieID = movieID;
     }
 
-    public boolean addToRatings(int keyid, Rating rating){
-
-        try{
-            ratings.put(keyid, rating);
-        }catch (Exception e){
-            return false;
-        }
-
-        return true;
-
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
     }
-
-
-
 }
